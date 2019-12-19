@@ -4,21 +4,11 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const webpack = require('webpack')
-
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-const createLintingRule = () => ({
-  test: /\.(js|vue)$/,
-  loader: 'eslint-loader',
-  enforce: 'pre',
-  include: [resolve('src'), resolve('test')],
-  options: {
-    formatter: require('eslint-friendly-formatter'),
-    emitWarning: !config.dev.showEslintErrorsInOverlay
-  }
-})
+
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
@@ -42,7 +32,6 @@ module.exports = {
   },
   module: {
     rules: [
-      ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -79,7 +68,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loader: "style-loader!css-loader!less-loader"
+        loader: "style-loader!css-loader!less-loader",
       }
     ]
   },
@@ -101,5 +90,4 @@ module.exports = {
       $: 'jquery'
     })
   ]
-
 }
